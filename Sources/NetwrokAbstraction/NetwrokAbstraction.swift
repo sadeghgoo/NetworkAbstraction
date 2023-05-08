@@ -8,9 +8,9 @@ public class NetworkAbstraction: NetworkAbstractionInterface {
     private let queue = DispatchQueue(label: "com.app.networking", attributes: .concurrent)
 
     private let interceptor: NetworkInterceptor?
-    private let core: NetworkInterface
+    private let core: NetworkAbstractionInterface
     
-    public init(core: NetworkInterface, interceptor: NetworkInterceptor? = nil) {
+    public init(core: NetworkAbstractionInterface, interceptor: NetworkInterceptor? = nil) {
         self.interceptor = interceptor
         self.core = core
     }
