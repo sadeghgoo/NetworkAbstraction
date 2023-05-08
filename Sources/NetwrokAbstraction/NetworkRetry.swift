@@ -1,6 +1,6 @@
 import Foundation
 
-enum NetworkRetry {
+public enum NetworkRetry {
     case retry
     case retryWithDelay(TimeInterval)
     case doNotRetry
