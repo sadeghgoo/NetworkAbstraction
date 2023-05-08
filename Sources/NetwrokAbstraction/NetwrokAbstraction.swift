@@ -1,10 +1,10 @@
 import Foundation
 
-public protocol NetworkInterface {
+public protocol NetworkAbstractionInterface {
     func request(_ request: URLRequest, completion: @escaping (Data?, URLResponse?, Error?) -> Void)
 }
 
-public class NetworkAbstraction: NetworkInterface {
+public class NetworkAbstraction: NetworkAbstractionInterface {
     private let queue = DispatchQueue(label: "com.app.networking", attributes: .concurrent)
 
     private let interceptor: NetworkInterceptor?
