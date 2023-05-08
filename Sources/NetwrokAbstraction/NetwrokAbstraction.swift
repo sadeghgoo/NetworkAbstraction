@@ -23,16 +23,27 @@ public class NetworkAbstraction: NetworkInterface {
                 strongSelf.interceptor?.afterRequest(request, response: response) { retryMechanism in
                     switch retryMechanism {
                     case .retry:
-                        strongSelf.request(request, completion: completion)
+                        strongSelf.request(request) { data, response, error in
+                            DispatchQueue.main.async {
+                                completion(data, response, error)
+                            }
+                        }
                     case .retryWithDelay(let timeInterval):
                         strongSelf.queue.asyncAfter(deadline: .now() + timeInterval, qos: .userInitiated) {
-                            strongSelf.request(request, completion: completion)
+                            strongSelf.request(request) { data, response, error in
+                                DispatchQueue.main.async {
+                                    completion(data, response, error)
+                                }
+                            }
                         }
                     case .doNotRetry:
                         break
                     }
                 }
-                completion(data, response, error)
+                
+                DispatchQueue.main.async {
+                    completion(data, response, error)
+                }
             }
         }
     }
