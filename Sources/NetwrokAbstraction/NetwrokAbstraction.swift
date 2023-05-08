@@ -32,6 +32,7 @@ public class NetworkAbstraction: NetworkInterface {
                         break
                     }
                 }
+                completion(data, response, error)
             }
         }
     }
